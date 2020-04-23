@@ -3,7 +3,7 @@ import classNames from "classnames";
 
 import styles from "./Graph.module.css";
 import { padding, shade } from "./utils";
-import { VENUE, SUSCEPTIBLE, SICK, RECOVERED, DEAD } from "./constants";
+import { VENUE, SUSCEPTIBLE, SICK, RECOVERED, DEAD, VACCINATED } from "./constants";
 
 function noop() {}
 
@@ -36,6 +36,7 @@ export default function Node({
     [styles[venue]]: true,
     [styles.susceptible]: node.state === SUSCEPTIBLE,
     [styles.sick]: node.state === SICK,
+    [styles.vaccinated]: node.state === VACCINATED,
     [styles.recovered]: node.state === RECOVERED,
     [styles.dead]: node.state === DEAD,
     [styles.locked]: node.locked

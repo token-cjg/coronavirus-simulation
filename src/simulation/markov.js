@@ -1,5 +1,5 @@
 import {
-  SUSCEPTIBLE, SICK, RECOVERED, DEAD,
+  SUSCEPTIBLE, SICK, RECOVERED, DEAD, VACCINATED
 } from '../constants';
 
 import { randomChoice, weightedRandom } from '../utils';
@@ -10,6 +10,9 @@ export const BASE = 'base';
 const SIR_TRANSITION_STATE = {
   [SUSCEPTIBLE]: [
     [1, SUSCEPTIBLE],
+  ],
+  [VACCINATED]: [
+    [1, VACCINATED],
   ],
   [RECOVERED]: [
     [1, RECOVERED],
@@ -31,6 +34,9 @@ const DISEASE_SPREAD_TRANSITION = {
   ],
   [RECOVERED]: [
     [1, RECOVERED],
+  ],
+  [VACCINATED]: [
+    [1, VACCINATED],
   ],
   [SICK]: [
     [1, SICK],

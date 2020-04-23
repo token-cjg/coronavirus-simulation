@@ -4,7 +4,7 @@ import styles from "./App.module.css";
 import Graph from "./Graph";
 import LineChart from "./LineChart";
 import SimulationSettings from "./SimulationSettings";
-import { SICK, RECOVERED, DEAD } from "./constants";
+import { SICK, RECOVERED, DEAD, VACCINATED } from "./constants";
 import { useInterval, randomChoice } from "./utils";
 import { nextSimulationTick, getInitialGraph } from "./simulation";
 
@@ -17,6 +17,7 @@ const INITIAL_SIMULATION_STATE = {
   supermarkets: 3,
   temples: 1,
   initialSickAgents: 1,
+  initialVaccinatedAgents: 50
 };
 
 const INITIAL_GRAPH = getInitialGraph(INITIAL_SIMULATION_STATE);
@@ -159,7 +160,7 @@ function App() {
             onRestartButtonClick={onRestartButtonClick}
           />
         </div>
-        
+
       </div>
       <div className={styles.pageInfo}>
       <ins

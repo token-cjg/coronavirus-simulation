@@ -25,6 +25,10 @@
 	fill: black;
 }
 
+.vaccinated {
+  fill: #0000FF;
+}
+
 .sick {
 	fill: #ff677d;
 }
