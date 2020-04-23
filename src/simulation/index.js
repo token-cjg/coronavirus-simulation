@@ -82,25 +82,20 @@ function getInitialGraph(simulationState) {
     }
   });
 
-  const sickAgents = randomSample(
-    nodes.filter(({ type }) => type === 'agent'),
-    simulationState.initialSickAgents
-  );
-
   const population = 378;
 
   simulationState.initialVaccinatedAgents = Math.ceil((simulationState.percentageInitialVaccinatedAgents / 100) * population);
 
-  const vaccinatedAgents = randomSample(
+  const agentsToAlter = randomSample(
     nodes.filter(({ type }) => type === 'agent'),
-    simulationState.initialVaccinatedAgents
+    simulationState.initialSickAgents + simulationState.initialVaccinatedAgents
   );
 
-  for (const agent of sickAgents) {
+  for (const agent of agentsToAlter.slice(0, simulationState.initialSickAgents)) {
     agent.state = SICK;
   };
 
-  for (const agent of vaccinatedAgents) {
+  for (const agent of agentsToAlter.slice(simulationState.initialSickAgents)) {
     agent.state = VACCINATED;
   };
 

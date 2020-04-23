@@ -31,6 +31,7 @@ function App() {
   const [historicalSickCount, setHistoricalSickCount] = useState([]);
   const [historicalRecoveredCount, setHistoricalRecoveredCount] = useState([]);
   const [historicalDeadCount, setHistoricalDeadCount] = useState([]);
+  const [historicalVaccinatedCount, setHistoricalVaccinatedCount] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const graphRef = useRef(null);
@@ -65,6 +66,12 @@ function App() {
         nodes.filter(({ state }) => state === DEAD).length
       )
     );
+
+    setHistoricalVaccinatedCount(
+      historicalVaccinatedCount.concat(
+        nodes.filter(({ state }) => state === VACCINATED).length
+      )
+    );
   }, 1000);
 
   useEffect(() => {
@@ -87,6 +94,7 @@ function App() {
     setHistoricalDeadCount([]);
     setHistoricalRecoveredCount([]);
     setHistoricalSickCount([]);
+    setHistoricalVaccinatedCount([]);
     setSimulationState({ ...simulationState, tick: 0 });
   };
 
@@ -141,6 +149,7 @@ function App() {
               { color: "red", points: historicalSickCount },
               { color: "green", points: historicalRecoveredCount },
               { color: "black", points: historicalDeadCount },
+              { color: "blue", points: historicalVaccinatedCount },
             ]}
           />
         </div>
