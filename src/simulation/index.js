@@ -87,6 +87,10 @@ function getInitialGraph(simulationState) {
     simulationState.initialSickAgents
   );
 
+  const population = 378;
+
+  simulationState.initialVaccinatedAgents = Math.ceil((simulationState.percentageInitialVaccinatedAgents / 100) * population);
+
   const vaccinatedAgents = randomSample(
     nodes.filter(({ type }) => type === 'agent'),
     simulationState.initialVaccinatedAgents

@@ -17,7 +17,7 @@ const INITIAL_SIMULATION_STATE = {
   supermarkets: 3,
   temples: 1,
   initialSickAgents: 1,
-  initialVaccinatedAgents: 50
+  percentageInitialVaccinatedAgents: 30
 };
 
 const INITIAL_GRAPH = getInitialGraph(INITIAL_SIMULATION_STATE);
@@ -108,7 +108,7 @@ function App() {
           <span className={styles.sampleSusceptible}>Susceptible</span>
           <span className={styles.sampleInfected}>Infected</span>
           <span className={styles.sampleRecovered}>Recovered</span>
-          <i>Click on a building to lock it (quarantine)</i>
+          <span className={styles.sampleVaccinated}>Vaccinated</span>
         </div>
         {!loading && (
           <Graph

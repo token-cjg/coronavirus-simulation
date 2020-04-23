@@ -144,6 +144,15 @@ pre {
   background: #75daad;
 }
 
+.samples .sampleVaccinated {
+  margin-left: 0.5em;
+  color: gray;
+}
+
+.samples .sampleVaccinated:before {
+  background: #0000FF;
+}
+
 .samples i {
   position: absolute;
   color: gray;
