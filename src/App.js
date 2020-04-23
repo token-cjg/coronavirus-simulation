@@ -4,7 +4,7 @@ import styles from "./App.module.css";
 import Graph from "./Graph";
 import LineChart from "./LineChart";
 import SimulationSettings from "./SimulationSettings";
-import { SICK, RECOVERED, DEAD } from "./constants";
+import { SICK, RECOVERED, DEAD, VACCINATED } from "./constants";
 import { useInterval, randomChoice } from "./utils";
 import { nextSimulationTick, getInitialGraph } from "./simulation";
 
@@ -17,6 +17,7 @@ const INITIAL_SIMULATION_STATE = {
   supermarkets: 3,
   temples: 1,
   initialSickAgents: 1,
+  percentageInitialVaccinatedAgents: 30
 };
 
 const INITIAL_GRAPH = getInitialGraph(INITIAL_SIMULATION_STATE);
@@ -30,6 +31,7 @@ function App() {
   const [historicalSickCount, setHistoricalSickCount] = useState([]);
   const [historicalRecoveredCount, setHistoricalRecoveredCount] = useState([]);
   const [historicalDeadCount, setHistoricalDeadCount] = useState([]);
+  const [historicalVaccinatedCount, setHistoricalVaccinatedCount] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const graphRef = useRef(null);
@@ -64,6 +66,12 @@ function App() {
         nodes.filter(({ state }) => state === DEAD).length
       )
     );
+
+    setHistoricalVaccinatedCount(
+      historicalVaccinatedCount.concat(
+        nodes.filter(({ state }) => state === VACCINATED).length
+      )
+    );
   }, 1000);
 
   useEffect(() => {
@@ -71,13 +79,7 @@ function App() {
   }, [loading]);
 
   const onNodeClick = (nodeId) => {
-    return () => {
-      const node = nodes.find(({ id }) => nodeId === id);
-      if (node.type !== "venue") {
-        return;
-      }
-      node.locked = !node.locked;
-    };
+    return () => {};
   };
 
   const onSettingChange = (key) => (event) => {
@@ -92,6 +94,7 @@ function App() {
     setHistoricalDeadCount([]);
     setHistoricalRecoveredCount([]);
     setHistoricalSickCount([]);
+    setHistoricalVaccinatedCount([]);
     setSimulationState({ ...simulationState, tick: 0 });
   };
 
@@ -107,7 +110,7 @@ function App() {
           <span className={styles.sampleSusceptible}>Susceptible</span>
           <span className={styles.sampleInfected}>Infected</span>
           <span className={styles.sampleRecovered}>Recovered</span>
-          <i>Click on a building to lock it (quarantine)</i>
+          <span className={styles.sampleVaccinated}>Vaccinated</span>
         </div>
         {!loading && (
           <Graph
@@ -137,6 +140,7 @@ function App() {
             }{" "}
             <br />
             SICK: {nodes.filter(({ state }) => state === SICK).length} <br />
+            VACCINATED: {nodes.filter(({ state }) => state === VACCINATED).length} <br />
           </div>
           <LineChart
             width={300}
@@ -145,6 +149,7 @@ function App() {
               { color: "red", points: historicalSickCount },
               { color: "green", points: historicalRecoveredCount },
               { color: "black", points: historicalDeadCount },
+              { color: "blue", points: historicalVaccinatedCount },
             ]}
           />
         </div>
@@ -159,7 +164,7 @@ function App() {
             onRestartButtonClick={onRestartButtonClick}
           />
         </div>
-        
+
       </div>
       <div className={styles.pageInfo}>
       <ins

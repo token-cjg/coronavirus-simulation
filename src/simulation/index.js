@@ -1,6 +1,6 @@
 import { randomSample, distance } from '../utils';
 
-import { AGENT, SUSCEPTIBLE, SICK, DEAD } from '../constants';
+import { AGENT, SUSCEPTIBLE, SICK, DEAD, VACCINATED } from '../constants';
 
 import { getNextMarkovStateForAgent, STAY, BASE, applySIRModel } from './markov';
 import { applyFixedNodeGrid } from './grid';
@@ -82,14 +82,22 @@ function getInitialGraph(simulationState) {
     }
   });
 
-  const sickAgents = randomSample(
+  const population = 378;
+
+  simulationState.initialVaccinatedAgents = Math.ceil((simulationState.percentageInitialVaccinatedAgents / 100) * population);
+
+  const agentsToAlter = randomSample(
     nodes.filter(({ type }) => type === 'agent'),
-    simulationState.initialSickAgents
+    simulationState.initialSickAgents + simulationState.initialVaccinatedAgents
   );
 
-  for (const agent of sickAgents) {
+  for (const agent of agentsToAlter.slice(0, simulationState.initialSickAgents)) {
     agent.state = SICK;
-  }
+  };
+
+  for (const agent of agentsToAlter.slice(simulationState.initialSickAgents)) {
+    agent.state = VACCINATED;
+  };
 
   return ({
     nodes: applyFixedNodeGrid(nodes),
