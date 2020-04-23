@@ -21,7 +21,7 @@ export default function SimulationSettings({
         /> <span className={ styles.value }>{ simulationState.initialSickAgents }</span>
       </label>
       <label>
-        Initial vaccinated agents<br />
+        Percentage initial vaccinated agents<br />
         <input
           type={ 'range' }
           onChange={ onSettingChange('percentageInitialVaccinatedAgents') }

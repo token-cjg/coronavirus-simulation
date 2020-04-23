@@ -72,13 +72,7 @@ function App() {
   }, [loading]);
 
   const onNodeClick = (nodeId) => {
-    return () => {
-      const node = nodes.find(({ id }) => nodeId === id);
-      if (node.type !== "venue") {
-        return;
-      }
-      node.locked = !node.locked;
-    };
+    return () => {};
   };
 
   const onSettingChange = (key) => (event) => {
@@ -138,6 +132,7 @@ function App() {
             }{" "}
             <br />
             SICK: {nodes.filter(({ state }) => state === SICK).length} <br />
+            VACCINATED: {nodes.filter(({ state }) => state === VACCINATED).length} <br />
           </div>
           <LineChart
             width={300}
