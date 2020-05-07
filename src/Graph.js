@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { MAX_ITERATES } from "./constants";
+
 
 import {
   forceSimulation,
@@ -17,6 +19,8 @@ export default class Graph extends Component {
 
     this.state = {
       current: null,
+      iteration: 0,
+      is_running: true,
       layout: props.nodes.reduce(
         (prev, acc) => (
           (prev[acc.id] = {
@@ -34,7 +38,6 @@ export default class Graph extends Component {
 
   componentWillMount() {
     this.runForceSimulation();
-
     this.simulation.on("tick", this.handleTick);
   }
 
@@ -55,13 +58,18 @@ export default class Graph extends Component {
   }
 
   shouldComponentUpdate(props, nextProps) {
-    return props.tick !== nextProps.tick;
+    const { layout, iteration, is_running } = this.state;
+    if (is_running) {
+      return props.tick !== nextProps.tick;
+    } else {
+      return false;
+    }
   }
 
   runForceSimulation() {
-    const { nodes, edges } = this.props;
-
-    const simulation = (this.simulation = forceSimulation(nodes)
+    const { nodes, edges, is_running } = this.props;
+    let simulation;
+    simulation = (this.simulation = forceSimulation(nodes)
       .force(
         "link",
         forceLink().id(node => node.id)
@@ -81,19 +89,37 @@ export default class Graph extends Component {
 
   handleTick() {
     const { simulation } = this;
-    const { layout } = this.state;
+    const { layout, iteration, is_running } = this.state;
     let updates = {};
 
-    simulation.nodes().map(node => {
-      updates[node.id] = node;
-    });
+    // console.log("Iteration is", iteration);
+    if (iteration >= MAX_ITERATES) {
+      console.log("Iteration count exceeded, stopping force simulation.");
 
-    this.setState({
-      layout: {
-        ...layout,
-        ...updates
-      }
-    });
+      // stop the simulation
+      this.simulation.stop();
+
+      // set is_running to "off"
+      this.setState({
+        layout: { ...layout, ...updates },
+        iteration: iteration,
+        is_running: false
+      })
+    }
+    else {
+      simulation.nodes().map(node => {
+        updates[node.id] = node;
+      });
+
+      this.setState({
+        layout: {
+          ...layout,
+          ...updates
+        },
+        iteration: iteration + 1,
+        is_running: is_running
+      });
+    }
   }
 
   setCurrent(nodeId) {
