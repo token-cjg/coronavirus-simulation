@@ -4,7 +4,7 @@ import styles from "./App.module.css";
 import Graph from "./Graph";
 import LineChart from "./LineChart";
 import SimulationSettings from "./SimulationSettings";
-import { SICK, RECOVERED, DEAD, VACCINATED } from "./constants";
+import { SICK, RECOVERED, DEAD, VACCINATED, SUSCEPTIBLE } from "./constants";
 import { useInterval, randomChoice } from "./utils";
 import { nextSimulationTick, getInitialGraph } from "./simulation";
 
@@ -129,9 +129,12 @@ function App() {
       </div>
       <div className={styles.section}>
         <div className={styles.stats}>
-          <h3>Stats</h3>
+          <h3>Statistics</h3>
           <div className={styles.population}>
             POPULATION: {nodes.filter(({ type }) => type === "agent").length}{" "}
+            <br />
+            VACCINATED: {nodes.filter(({ state }) => state === VACCINATED).length} <br />
+            SUSCEPTIBLE: {nodes.filter(({ state }) => state === SUSCEPTIBLE).length} <br />
             <br />
             DEAD: {nodes.filter(({ state }) => state === DEAD).length} <br />
             RECOVERED: {
@@ -139,7 +142,8 @@ function App() {
             }{" "}
             <br />
             SICK: {nodes.filter(({ state }) => state === SICK).length} <br />
-            VACCINATED: {nodes.filter(({ state }) => state === VACCINATED).length} <br />
+            <br />
+            TOTAL CONFIRMED CASES: {nodes.filter(({ state }) => state === SICK || state === DEAD || state === RECOVERED).length} <br />
           </div>
           <LineChart
             width={300}
@@ -148,7 +152,6 @@ function App() {
               { color: "red", points: historicalSickCount },
               { color: "green", points: historicalRecoveredCount },
               { color: "black", points: historicalDeadCount },
-              { color: "blue", points: historicalVaccinatedCount },
             ]}
           />
         </div>
