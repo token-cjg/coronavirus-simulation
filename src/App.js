@@ -16,7 +16,7 @@ const INITIAL_SIMULATION_STATE = {
   hospitals: 1,
   supermarkets: 3,
   temples: 1,
-  initialSickAgents: 1,
+  initialSickAgents: 3,
   percentageInitialVaccinatedAgents: 30
 };
 
@@ -101,8 +101,7 @@ function App() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <a href="/" style={{ color: 'gray', textDecoration: 'none' }}>↵ Other simulations</a>
-        <h3>Simulating coronavirus with the SIR model</h3>
+        <h3>What’s the effect of vaccination on how a virus spreads through a community?</h3>
         <h2>An experiment to analyse how a virus spread over a community</h2>
       </div>
       <div className={styles.simulation}>
@@ -156,7 +155,21 @@ function App() {
         <div className={styles.simulationSettings}>
           <h3>Settings</h3>
           <div className={styles.simulationInfo}>
-            Click on a building on the map to make it quarantined.
+            How we will set up our experiment?
+            <p>
+              The only change that you will need to make is to the initial vaccinated
+              slider in the simulation. You will need to run the experiment three times
+              in total under the following settings:
+            </p>
+            <p>
+              0%,
+              50% and
+              95% initial vaccinated people.
+            </p>
+            <p>
+              You can reset the simulation each time by clicking restart the simulation.
+            </p>
+
           </div>
           <SimulationSettings
             simulationState={simulationState}
