@@ -5,6 +5,10 @@ import { AGENT, SUSCEPTIBLE, SICK, DEAD, VACCINATED } from '../constants';
 import { getNextMarkovStateForAgent, STAY, BASE, applySIRModel } from './markov';
 import { applyFixedNodeGrid } from './grid';
 
+function clamp(num, min, max){
+  return Math.min(Math.max(num, min), max)
+}
+
 const VENUES = [
   {
     name: 'house',
@@ -84,11 +88,11 @@ function getInitialGraph(simulationState) {
 
   const population = 378;
 
-  simulationState.initialVaccinatedAgents = Math.ceil((simulationState.percentageInitialVaccinatedAgents / 100) * population);
+  simulationState.initialVaccinatedAgents = clamp(Math.ceil((simulationState.percentageInitialVaccinatedAgents / 100) * population), 0, population);
 
   const agentsToAlter = randomSample(
     nodes.filter(({ type }) => type === 'agent'),
-    simulationState.initialSickAgents + simulationState.initialVaccinatedAgents
+    clamp(simulationState.initialSickAgents + simulationState.initialVaccinatedAgents, 0, population)
   );
 
   for (const agent of agentsToAlter.slice(0, simulationState.initialSickAgents)) {

@@ -189,158 +189,30 @@ function App() {
           data-ad-slot="8487596319"
         ></ins>
         <div className={styles.section}>
-          <h1>What is this?</h1>
-          <p>
-            This is a simulation of how a virus spread of the population. The
-            simulation is heavily inspired by the SIR model. SIR is a technique
-            used to simplify the mathematical modelling of infectious disase.
-          </p>
-          <p>
-            In the SIR model, we have three different states of each agent (a
-            person). The first state is
-            <i> SUSCEPTIBLE</i>, second one is <i> SICK</i>, and the last one is
-            <i> RECOVERED</i>. We have also a <i> DEAD</i> state in this
-            simulation.
-          </p>
-          <h1>How does it work?</h1>
-          <p>
-            Every agent starts with the `SUSCEPTIBLE` state in the simulation,
-            except a few of them. Some of the agents are on the `SICK` state at
-            the very beginning. Over the time, sick agents spread the virus to
-            rest of the population and the other agents get sick as well. After
-            the infection, they switch into a recovered or a dead state based on
-            some probabilistic values.
-          </p>
-          <p>
-            The probabilistic values are defined in a markov-chain concept.
-            Markov chain is a stochastic model to describe a sequence of
-            possible events that can occur in the future.
-          </p>
-          <h1>How does a probabilistic model look like?</h1>
-          <p>
-            We're using a markov graph to define a probabilistic transition. We
-            can simply say that markov chain is a graph of all the possible
-            state transitions of an individual node.
-          </p>
-          <div style={{ height: 600 }}>
-            <iframe
-              style={{
-                position: "absolute",
-                border: 0,
-                marginLeft: "-4em",
-              }}
-              width={970}
-              height={650}
-              src={
-                "https://fatiherikli.github.io/markov-chain-demo/index-en.html"
-              }
-            />
-          </div>
-          <p>
-            In a infectious disaese case, we can use markov chains to define the
-            probabilistic chain of an person to be inftected, to be recovered,
-            or to be dead. Furthermore, we can also define the possible travel
-            route of an agent by using the same technique.
-          </p>
-          <h1>
-            How can we define a probabilistic model of an infecitious disease?
-          </h1>
-          <p>
-            As I previously mentioned, we can use the SIR model to set up the
-            simulation, and we can use markov chains to define probabilistic
-            model of an infectious disaese.
-          </p>
-          <p style={{ fontWeight: "bold" }}>
-            I would like to give a disclaimer that, I'm just an open-source
-            developer who loves building data visualizations and simulations, I
-            don't have a background of Epidemiology or other related stuff.
-            Please don't take my assumptions seriously.
-          </p>
-          <p>Here's the state transition map of an agent over the time.</p>
-          <pre>{`const SIR_TRANSITION_STATE = {
-  [SUSCEPTIBLE]: [
-    [1, SUSCEPTIBLE],
-  ],
-  [RECOVERED]: [
-    [1, RECOVERED],
-  ],
-  [SICK]: [
-    [0.995, SICK],
-    [0.004, RECOVERED],
-    [0.001, DEAD],
-  ],
-  [DEAD]: [
-    [1, DEAD],
-  ],
-};`}</pre>
-          <p>
-            Simulation's clock ticks on each second. On each tick, all the
-            agents are subject to that transition map. As you can see on that
-            object, we have defined states as keys, and possible values of that
-            specific state. For example, a SUSCEPTIBLE person will be always
-            SUSCEPTIBLE, there's no any state change for that state, yet. But
-            for a sick agent, there are two more possible states different than
-            it's actual state. So the options are; staying as sick until the
-            next state transition, being recovered, or being dead. The values
-            defined before the next state is the probabilistic value.
-          </p>
-          <pre>{`const DISEASE_SPREAD_TRANSITION = {
-  [SUSCEPTIBLE]: [
-    [0.3, SICK],
-    [0.7, SUSCEPTIBLE],
-  ],
-  [RECOVERED]: [
-    [1, RECOVERED],
-  ],
-  [SICK]: [
-    [1, SICK],
-  ],
-  [DEAD]: [
-    [1, DEAD],
-  ],
-};`}</pre>
-          <p>
-            The previous transition map was for a person who has no any
-            interaction with a sick person. When an agent meets with a sick
-            person, the possibility of getting sick is different. As you can see
-            on this map, a susceptible person will get sick by the possibility
-            of %30.
-          </p>
-          <p>
-            Question: In that map, people who already recovered from the virus
-            develop an immunity and don't get sick again. How could we define
-            the probabilistic map if the disease was super infectious and people
-            who recovered don't gain any immunity?
-          </p>
-          <h2>Other simulations</h2>
-          <p>
-            If you liked that stuff, you can explore other simulations that I
-            created in the past.
-          </p>
-          <ul>
-            <li>
-              <a href="https://fatiherikli.github.io/post-truth/">
-                Post-truth: How a disinformation spreads over a community
-              </a>
-            </li>
-            <li>
-              <a href="https://fatiherikli.github.io/language-evolution-simulation/">
-                Language-evolution: Simulation of the evolution of languages
-              </a>
-            </li>
-            <li>
-              <a href="https://fatiherikli.github.io/crowd-simulation/">
-                Crowd-of-istanbul: Crowd simulation of Istanbul streets
-              </a>
-            </li>
-          </ul>
-          <br />
 
+
+
+
+
+
+          <h3>What is observable? - Dependent variables</h3>
+          <p>
+          The simulation will allow you to observe a number of variables as you
+          watch what happens over 100 days. You will be able to see:
+            <ul>
+              <li>how many people get infected / die / recover</li>
+              <li>how quickly the virus spreads</li>
+            </ul>
+          </p>
+          <h3>What can we change? - Independent variables</h3>
+          <p>
+            You will be able to make changes to how many people are vaccinated
+            at the start of the experiment.
+          </p>
           <h1>I would like to discover more</h1>
           <p>
             This is an MIT-licensed open-source project, you can find the source
-            code on github. Feel free to copy, use or modify it for your own
-            simulations.
+            code on github.
           </p>
           <p>
             <a href="https://github.com/fatiherikli/coronavirus-simulation">
@@ -349,8 +221,6 @@ function App() {
           </p>
 
           <p style={{ marginBottom: "4em" }}>
-            Thanks for reading this article, and stay safe! <br />{" "}
-            <a href="https://twitter.com/fthrkl">@fthrkl</a>
           </p>
         </div>
       </div>

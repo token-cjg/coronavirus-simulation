@@ -27,7 +27,7 @@ export default function SimulationSettings({
           onChange={ onSettingChange('percentageInitialVaccinatedAgents') }
           value={ simulationState.percentageInitialVaccinatedAgents }
           min={ 0 }
-          max={ 100 }
+          max={ 95 }
         /> <span className={ styles.value }>{ simulationState.percentageInitialVaccinatedAgents }</span>
       </label>
       </div>
