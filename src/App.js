@@ -4,7 +4,7 @@ import styles from "./App.module.css";
 import Graph from "./Graph";
 import LineChart from "./LineChart";
 import SimulationSettings from "./SimulationSettings";
-import { SICK, RECOVERED, DEAD, VACCINATED, SUSCEPTIBLE } from "./constants";
+import { SICK, RECOVERED, DEAD, VACCINATED, SUSCEPTIBLE, MAX_ITERATES } from "./constants";
 import { useInterval, randomChoice } from "./utils";
 import { nextSimulationTick, getInitialGraph } from "./simulation";
 
@@ -47,31 +47,33 @@ function App() {
       edges
     );
 
-    setSimulationState(state);
+    if (state.tick < MAX_ITERATES) {
+      setSimulationState(state);
 
-    setHistoricalSickCount(
-      historicalSickCount.concat(
-        nodes.filter(({ state }) => state === SICK).length
-      )
-    );
+      setHistoricalSickCount(
+        historicalSickCount.concat(
+          nodes.filter(({ state }) => state === SICK).length
+        )
+      );
 
-    setHistoricalRecoveredCount(
-      historicalRecoveredCount.concat(
-        nodes.filter(({ state }) => state === RECOVERED).length
-      )
-    );
+      setHistoricalRecoveredCount(
+        historicalRecoveredCount.concat(
+          nodes.filter(({ state }) => state === RECOVERED).length
+        )
+      );
 
-    setHistoricalDeadCount(
-      historicalDeadCount.concat(
-        nodes.filter(({ state }) => state === DEAD).length
-      )
-    );
+      setHistoricalDeadCount(
+        historicalDeadCount.concat(
+          nodes.filter(({ state }) => state === DEAD).length
+        )
+      );
 
-    setHistoricalVaccinatedCount(
-      historicalVaccinatedCount.concat(
-        nodes.filter(({ state }) => state === VACCINATED).length
-      )
-    );
+      setHistoricalVaccinatedCount(
+        historicalVaccinatedCount.concat(
+          nodes.filter(({ state }) => state === VACCINATED).length
+        )
+      );
+    }
   }, 1000);
 
   useEffect(() => {

@@ -20,7 +20,7 @@ export default class Graph extends Component {
     this.state = {
       current: null,
       iteration: 0,
-      is_running: true,
+      running: true,
       layout: props.nodes.reduce(
         (prev, acc) => (
           (prev[acc.id] = {
@@ -58,8 +58,8 @@ export default class Graph extends Component {
   }
 
   shouldComponentUpdate(props, nextProps) {
-    const { layout, iteration, is_running } = this.state;
-    if (is_running) {
+    const { layout, iteration, running } = this.state;
+    if (running) {
       return props.tick !== nextProps.tick;
     } else {
       return false;
@@ -67,9 +67,8 @@ export default class Graph extends Component {
   }
 
   runForceSimulation() {
-    const { nodes, edges, is_running } = this.props;
-    let simulation;
-    simulation = (this.simulation = forceSimulation(nodes)
+    const { nodes, edges } = this.props;
+    const simulation = (this.simulation = forceSimulation(nodes)
       .force(
         "link",
         forceLink().id(node => node.id)
@@ -89,24 +88,25 @@ export default class Graph extends Component {
 
   handleTick() {
     const { simulation } = this;
-    const { layout, iteration, is_running } = this.state;
+    const { layout, iteration, running } = this.state;
     let updates = {};
 
-    // console.log("Iteration is", iteration);
     if (iteration >= MAX_ITERATES) {
+      console.log("Max allowed", MAX_ITERATES, iteration);
       console.log("Iteration count exceeded, stopping force simulation.");
 
       // stop the simulation
       this.simulation.stop();
 
-      // set is_running to "off"
+      // set running to "off"
       this.setState({
         layout: { ...layout, ...updates },
         iteration: iteration,
-        is_running: false
+        running: false
       })
     }
     else {
+      console.log("iteration count is", iteration);
       simulation.nodes().map(node => {
         updates[node.id] = node;
       });
@@ -117,7 +117,7 @@ export default class Graph extends Component {
           ...updates
         },
         iteration: iteration + 1,
-        is_running: is_running
+        running: true
       });
     }
   }
