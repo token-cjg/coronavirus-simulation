@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { MAX_ITERATES } from "./constants";
+
 
 import {
   forceSimulation,
@@ -17,6 +19,7 @@ export default class Graph extends Component {
 
     this.state = {
       current: null,
+      running: true,
       layout: props.nodes.reduce(
         (prev, acc) => (
           (prev[acc.id] = {
@@ -34,7 +37,6 @@ export default class Graph extends Component {
 
   componentWillMount() {
     this.runForceSimulation();
-
     this.simulation.on("tick", this.handleTick);
   }
 
@@ -55,12 +57,16 @@ export default class Graph extends Component {
   }
 
   shouldComponentUpdate(props, nextProps) {
-    return props.tick !== nextProps.tick;
+    const { layout, iteration, running } = this.state;
+    if (running) {
+      return props.tick !== nextProps.tick;
+    } else {
+      return false;
+    }
   }
 
   runForceSimulation() {
     const { nodes, edges } = this.props;
-
     const simulation = (this.simulation = forceSimulation(nodes)
       .force(
         "link",
@@ -80,20 +86,37 @@ export default class Graph extends Component {
   }
 
   handleTick() {
-    const { simulation } = this;
-    const { layout } = this.state;
+    const { simulation, sirModelIterate } = this;
+    const { layout, iteration, running } = this.state;
     let updates = {};
 
-    simulation.nodes().map(node => {
-      updates[node.id] = node;
-    });
+    if (sirModelIterate >= MAX_ITERATES) {
+      console.log("Max allowed", MAX_ITERATES, sirModelIterate);
+      console.log("Iteration count exceeded, stopping force simulation.");
 
-    this.setState({
-      layout: {
-        ...layout,
-        ...updates
-      }
-    });
+      // stop the simulation
+      this.simulation.stop();
+
+      // set running to "off"
+      this.setState({
+        layout: { ...layout, ...updates },
+        running: false
+      })
+    }
+    else {
+      console.log("iteration count is", sirModelIterate);
+      simulation.nodes().map(node => {
+        updates[node.id] = node;
+      });
+
+      this.setState({
+        layout: {
+          ...layout,
+          ...updates
+        },
+        running: true
+      });
+    }
   }
 
   setCurrent(nodeId) {

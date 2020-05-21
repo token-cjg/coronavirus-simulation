@@ -4,7 +4,7 @@ import styles from "./App.module.css";
 import Graph from "./Graph";
 import LineChart from "./LineChart";
 import SimulationSettings from "./SimulationSettings";
-import { SICK, RECOVERED, DEAD, VACCINATED, SUSCEPTIBLE } from "./constants";
+import { SICK, RECOVERED, DEAD, VACCINATED, SUSCEPTIBLE, MAX_ITERATES } from "./constants";
 import { useInterval, randomChoice } from "./utils";
 import { nextSimulationTick, getInitialGraph } from "./simulation";
 
@@ -33,6 +33,7 @@ function App() {
   const [historicalDeadCount, setHistoricalDeadCount] = useState([]);
   const [historicalVaccinatedCount, setHistoricalVaccinatedCount] = useState([]);
   const [loading, setLoading] = useState(true);
+  let sirModelIterate
 
   const graphRef = useRef(null);
 
@@ -47,31 +48,35 @@ function App() {
       edges
     );
 
-    setSimulationState(state);
+    sirModelIterate = state.tick;
 
-    setHistoricalSickCount(
-      historicalSickCount.concat(
-        nodes.filter(({ state }) => state === SICK).length
-      )
-    );
+    if (sirModelIterate < MAX_ITERATES) {
+      setSimulationState(state);
 
-    setHistoricalRecoveredCount(
-      historicalRecoveredCount.concat(
-        nodes.filter(({ state }) => state === RECOVERED).length
-      )
-    );
+      setHistoricalSickCount(
+        historicalSickCount.concat(
+          nodes.filter(({ state }) => state === SICK).length
+        )
+      );
 
-    setHistoricalDeadCount(
-      historicalDeadCount.concat(
-        nodes.filter(({ state }) => state === DEAD).length
-      )
-    );
+      setHistoricalRecoveredCount(
+        historicalRecoveredCount.concat(
+          nodes.filter(({ state }) => state === RECOVERED).length
+        )
+      );
 
-    setHistoricalVaccinatedCount(
-      historicalVaccinatedCount.concat(
-        nodes.filter(({ state }) => state === VACCINATED).length
-      )
-    );
+      setHistoricalDeadCount(
+        historicalDeadCount.concat(
+          nodes.filter(({ state }) => state === DEAD).length
+        )
+      );
+
+      setHistoricalVaccinatedCount(
+        historicalVaccinatedCount.concat(
+          nodes.filter(({ state }) => state === VACCINATED).length
+        )
+      );
+    }
   }, 1000);
 
   useEffect(() => {
@@ -123,6 +128,7 @@ function App() {
             tick={simulationState.tick}
             nodes={nodes}
             edges={edges}
+            sirModelIterate={sirModelIterate}
             onNodeClick={onNodeClick}
             ref={graphRef}
           />
@@ -173,21 +179,21 @@ function App() {
             <p>
             Use the slider bar in the simulation to enter 0% initial number vaccinated.
             Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
-            <b>recovered</b>, and <b>sick/infected</b> after 100 days in <b>Table 1</b>.
+            <b>recovered</b>, and <b>infected</b> after 100 days in <b>Table 1</b>.
             Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
             </p>
             <b>Experiment 2 - 50% vaccinated</b>
             <p>
             Use the slider bar in the simulation to enter 50% initial number vaccinated.
             Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
-            <b>recovered</b>, and <b>sick/infected</b> after 100 days in <b>Table 1</b>.
+            <b>recovered</b>, and <b>infected</b> after 100 days in <b>Table 1</b>.
             Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
             </p>
             <b>Experiment 3 - 95% vaccinated</b>
             <p>
             Use the slider bar in the simulation to enter 95% initial number vaccinated.
             Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
-            <b>recovered</b>, and <b>sick/infected</b> after 100 days in <b>Table 1</b>.
+            <b>recovered</b>, and <b>infected</b> after 100 days in <b>Table 1</b>.
             Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
             </p>
           </div>
