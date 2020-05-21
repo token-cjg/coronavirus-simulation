@@ -19,7 +19,6 @@ export default class Graph extends Component {
 
     this.state = {
       current: null,
-      iteration: 0,
       running: true,
       layout: props.nodes.reduce(
         (prev, acc) => (
@@ -87,12 +86,12 @@ export default class Graph extends Component {
   }
 
   handleTick() {
-    const { simulation } = this;
+    const { simulation, sirModelIterate } = this;
     const { layout, iteration, running } = this.state;
     let updates = {};
 
-    if (iteration >= MAX_ITERATES) {
-      console.log("Max allowed", MAX_ITERATES, iteration);
+    if (sirModelIterate >= MAX_ITERATES) {
+      console.log("Max allowed", MAX_ITERATES, sirModelIterate);
       console.log("Iteration count exceeded, stopping force simulation.");
 
       // stop the simulation
@@ -101,12 +100,11 @@ export default class Graph extends Component {
       // set running to "off"
       this.setState({
         layout: { ...layout, ...updates },
-        iteration: iteration,
         running: false
       })
     }
     else {
-      console.log("iteration count is", iteration);
+      console.log("iteration count is", sirModelIterate);
       simulation.nodes().map(node => {
         updates[node.id] = node;
       });
@@ -116,7 +114,6 @@ export default class Graph extends Component {
           ...layout,
           ...updates
         },
-        iteration: iteration + 1,
         running: true
       });
     }

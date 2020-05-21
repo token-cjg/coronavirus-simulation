@@ -33,6 +33,7 @@ function App() {
   const [historicalDeadCount, setHistoricalDeadCount] = useState([]);
   const [historicalVaccinatedCount, setHistoricalVaccinatedCount] = useState([]);
   const [loading, setLoading] = useState(true);
+  let sirModelIterate
 
   const graphRef = useRef(null);
 
@@ -47,7 +48,9 @@ function App() {
       edges
     );
 
-    if (state.tick < MAX_ITERATES) {
+    sirModelIterate = state.tick;
+
+    if (sirModelIterate < MAX_ITERATES) {
       setSimulationState(state);
 
       setHistoricalSickCount(
@@ -125,6 +128,7 @@ function App() {
             tick={simulationState.tick}
             nodes={nodes}
             edges={edges}
+            sirModelIterate={sirModelIterate}
             onNodeClick={onNodeClick}
             ref={graphRef}
           />
