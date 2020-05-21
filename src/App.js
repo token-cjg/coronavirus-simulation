@@ -164,19 +164,31 @@ function App() {
             onRestartButtonClick={onRestartButtonClick}
           />
           <div className={styles.simulationInfo}>
-            How we will set up our experiment?
+            Method:
             <p>
-              The only change that you will need to make is to the initial vaccinated
-              slider in the simulation. You will need to run the experiment three times
-              in total under the following settings:
+            You will collect that data for experiments under three different conditions:
+            where the initial number vaccinated are 0%, 50% and 95%.
             </p>
+            <b>Experiment 1 - 0% vaccinated</b>
             <p>
-              0%,
-              50% and
-              95% initial vaccinated people.
+            Use the slider bar in the simulation to enter 0% initial number vaccinated.
+            Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
+            <b>recovered</b>, and <b>sick/infected</b> after 100 days in <b>Table 1</b>.
+            Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
             </p>
+            <b>Experiment 2 - 50% vaccinated</b>
             <p>
-              You can reset the simulation each time by clicking restart the simulation.
+            Use the slider bar in the simulation to enter 50% initial number vaccinated.
+            Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
+            <b>recovered</b>, and <b>sick/infected</b> after 100 days in <b>Table 1</b>.
+            Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
+            </p>
+            <b>Experiment 3 - 95% vaccinated</b>
+            <p>
+            Use the slider bar in the simulation to enter 95% initial number vaccinated.
+            Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
+            <b>recovered</b>, and <b>sick/infected</b> after 100 days in <b>Table 1</b>.
+            Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
             </p>
           </div>
         </div>
