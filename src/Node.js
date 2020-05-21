@@ -55,9 +55,13 @@ export default function Node({
           {ICONS[node.venue]}
         </text>
       ) : node.state === 3 ? (
-        <text onClick={onNodeClick(node.id)} x={-8} y={7} fontSize={16}>
-          💀
-        </text>
+          <circle
+            className={classes}
+            r={5}
+            stroke={0}
+            onClick={onNodeClick(node.id)}
+            fill={"black"}
+          />
       ) : (
         <circle
           className={classes}

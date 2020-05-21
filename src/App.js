@@ -102,7 +102,7 @@ function App() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h3>What’s the effect of vaccination on how a virus spreads through a community?</h3>
-        <h2>An experiment to analyse how a virus spread over a community</h2>
+        <h2>An experiment to analyse how a virus spreads through a community</h2>
       </div>
       <div className={styles.simulation}>
         <div className={styles.samples}>
@@ -110,6 +110,7 @@ function App() {
           <span className={styles.sampleInfected}>Infected</span>
           <span className={styles.sampleRecovered}>Recovered</span>
           <span className={styles.sampleVaccinated}>Vaccinated</span>
+          <span className={styles.sampleDead}>Deceased</span>
         </div>
         {!loading && (
           <Graph
@@ -136,12 +137,12 @@ function App() {
             VACCINATED: {nodes.filter(({ state }) => state === VACCINATED).length} <br />
             SUSCEPTIBLE: {nodes.filter(({ state }) => state === SUSCEPTIBLE).length} <br />
             <br />
-            DEAD: {nodes.filter(({ state }) => state === DEAD).length} <br />
+            DECEASED: {nodes.filter(({ state }) => state === DEAD).length} <br />
             RECOVERED: {
               nodes.filter(({ state }) => state === RECOVERED).length
             }{" "}
             <br />
-            SICK: {nodes.filter(({ state }) => state === SICK).length} <br />
+            INFECTED: {nodes.filter(({ state }) => state === SICK).length} <br />
             <br />
             TOTAL CONFIRMED CASES: {nodes.filter(({ state }) => state === SICK || state === DEAD || state === RECOVERED).length} <br />
           </div>
@@ -201,12 +202,11 @@ function App() {
           <h3>What is observable? - Dependent variables</h3>
           <p>
           The simulation will allow you to observe a number of variables as you
-          watch what happens over 100 days. You will be able to see:
-            <ul>
-              <li>how many people get infected / die / recover</li>
-              <li>how quickly the virus spreads</li>
-            </ul>
-          </p>
+          watch what happens over 100 days. You will be able to see:</p>
+          <ul>
+            <li>how many people get infected / die / recover</li>
+            <li>how quickly the virus spreads</li>
+          </ul>
           <h3>What can we change? - Independent variables</h3>
           <p>
             You will be able to make changes to how many people are vaccinated

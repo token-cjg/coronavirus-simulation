@@ -154,6 +154,15 @@ pre {
   background: #0000FF;
 }
 
+.samples .sampleDead {
+  margin-left: 8em;
+  color: gray;
+}
+
+.samples .sampleDead:before {
+  background: #000000;
+}
+
 .samples i {
   position: absolute;
   color: gray;
