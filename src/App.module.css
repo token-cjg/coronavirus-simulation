@@ -154,9 +154,35 @@ pre {
   background: #0000FF;
 }
 
+.samples .sampleDead {
+  margin-left: 8em;
+  color: gray;
+}
+
+.samples .sampleDead:before {
+  background: #000000;
+}
+
 .samples i {
   position: absolute;
   color: gray;
   margin-top: 0.9em;
   margin-left: 5.5em;
+}
+
+.blackCircle:before {
+  content: ' \25CF';
+  font-size: 18px;
+}
+
+.infectedCircle:before {
+  content: ' \25CF';
+  color: red;
+  font-size: 18px;
+}
+
+.recoveredCircle:before {
+  content: ' \25CF';
+  color: green;
+  font-size: 18px;
 }

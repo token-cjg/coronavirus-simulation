@@ -102,7 +102,7 @@ function App() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h3>What’s the effect of vaccination on how a virus spreads through a community?</h3>
-        <h2>An experiment to analyse how a virus spread over a community</h2>
+        <h2>An experiment to analyse how a virus spreads through a community</h2>
       </div>
       <div className={styles.simulation}>
         <div className={styles.samples}>
@@ -110,6 +110,7 @@ function App() {
           <span className={styles.sampleInfected}>Infected</span>
           <span className={styles.sampleRecovered}>Recovered</span>
           <span className={styles.sampleVaccinated}>Vaccinated</span>
+          <span className={styles.sampleDead}>Deceased</span>
         </div>
         {!loading && (
           <Graph
@@ -136,12 +137,12 @@ function App() {
             VACCINATED: {nodes.filter(({ state }) => state === VACCINATED).length} <br />
             SUSCEPTIBLE: {nodes.filter(({ state }) => state === SUSCEPTIBLE).length} <br />
             <br />
-            DEAD: {nodes.filter(({ state }) => state === DEAD).length} <br />
-            RECOVERED: {
+            <span class={styles.blackCircle}></span> DECEASED: {nodes.filter(({ state }) => state === DEAD).length} <br />
+            <span class={styles.recoveredCircle}></span> RECOVERED: {
               nodes.filter(({ state }) => state === RECOVERED).length
             }{" "}
             <br />
-            SICK: {nodes.filter(({ state }) => state === SICK).length} <br />
+            <span class={styles.infectedCircle}></span> INFECTED: {nodes.filter(({ state }) => state === SICK).length} <br />
             <br />
             TOTAL CONFIRMED CASES: {nodes.filter(({ state }) => state === SICK || state === DEAD || state === RECOVERED).length} <br />
           </div>
@@ -157,28 +158,39 @@ function App() {
         </div>
         <div className={styles.simulationSettings}>
           <h3>Settings</h3>
-          <div className={styles.simulationInfo}>
-            How we will set up our experiment?
-            <p>
-              The only change that you will need to make is to the initial vaccinated
-              slider in the simulation. You will need to run the experiment three times
-              in total under the following settings:
-            </p>
-            <p>
-              0%,
-              50% and
-              95% initial vaccinated people.
-            </p>
-            <p>
-              You can reset the simulation each time by clicking restart the simulation.
-            </p>
-
-          </div>
           <SimulationSettings
             simulationState={simulationState}
             onSettingChange={onSettingChange}
             onRestartButtonClick={onRestartButtonClick}
           />
+          <div className={styles.simulationInfo}>
+            Method:
+            <p>
+            You will collect that data for experiments under three different conditions:
+            where the initial number vaccinated are 0%, 50% and 95%.
+            </p>
+            <b>Experiment 1 - 0% vaccinated</b>
+            <p>
+            Use the slider bar in the simulation to enter 0% initial number vaccinated.
+            Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
+            <b>recovered</b>, and <b>sick/infected</b> after 100 days in <b>Table 1</b>.
+            Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
+            </p>
+            <b>Experiment 2 - 50% vaccinated</b>
+            <p>
+            Use the slider bar in the simulation to enter 50% initial number vaccinated.
+            Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
+            <b>recovered</b>, and <b>sick/infected</b> after 100 days in <b>Table 1</b>.
+            Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
+            </p>
+            <b>Experiment 3 - 95% vaccinated</b>
+            <p>
+            Use the slider bar in the simulation to enter 95% initial number vaccinated.
+            Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
+            <b>recovered</b>, and <b>sick/infected</b> after 100 days in <b>Table 1</b>.
+            Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
+            </p>
+          </div>
         </div>
 
       </div>
@@ -201,12 +213,11 @@ function App() {
           <h3>What is observable? - Dependent variables</h3>
           <p>
           The simulation will allow you to observe a number of variables as you
-          watch what happens over 100 days. You will be able to see:
-            <ul>
-              <li>how many people get infected / die / recover</li>
-              <li>how quickly the virus spreads</li>
-            </ul>
-          </p>
+          watch what happens over 100 days. You will be able to see:</p>
+          <ul>
+            <li>how many people get infected / die / recover</li>
+            <li>how quickly the virus spreads</li>
+          </ul>
           <h3>What can we change? - Independent variables</h3>
           <p>
             You will be able to make changes to how many people are vaccinated

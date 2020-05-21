@@ -11,16 +11,6 @@ export default function SimulationSettings({
     <div className={ styles.container }>
       <div className={ styles.form }>
       <label>
-        Initial sick people<br />
-        <input
-          type={ 'range' }
-          onChange={ onSettingChange('initialSickAgents') }
-          value={ simulationState.initialSickAgents }
-          min={ 0 }
-          max={ 10 }
-        /> <span className={ styles.value }>{ simulationState.initialSickAgents }</span>
-      </label>
-      <label>
         Percentage initial vaccinated people<br />
         <input
           type={ 'range' }
