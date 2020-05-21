@@ -179,21 +179,21 @@ function App() {
             <p>
             Use the slider bar in the simulation to enter 0% initial number vaccinated.
             Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
-            <b>recovered</b>, and <b>sick/infected</b> after 100 days in <b>Table 1</b>.
+            <b>recovered</b>, and <b>infected</b> after 100 days in <b>Table 1</b>.
             Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
             </p>
             <b>Experiment 2 - 50% vaccinated</b>
             <p>
             Use the slider bar in the simulation to enter 50% initial number vaccinated.
             Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
-            <b>recovered</b>, and <b>sick/infected</b> after 100 days in <b>Table 1</b>.
+            <b>recovered</b>, and <b>infected</b> after 100 days in <b>Table 1</b>.
             Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
             </p>
             <b>Experiment 3 - 95% vaccinated</b>
             <p>
             Use the slider bar in the simulation to enter 95% initial number vaccinated.
             Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
-            <b>recovered</b>, and <b>sick/infected</b> after 100 days in <b>Table 1</b>.
+            <b>recovered</b>, and <b>infected</b> after 100 days in <b>Table 1</b>.
             Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
             </p>
           </div>
