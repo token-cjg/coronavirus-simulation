@@ -137,12 +137,12 @@ function App() {
             VACCINATED: {nodes.filter(({ state }) => state === VACCINATED).length} <br />
             SUSCEPTIBLE: {nodes.filter(({ state }) => state === SUSCEPTIBLE).length} <br />
             <br />
-            DECEASED: {nodes.filter(({ state }) => state === DEAD).length} <br />
-            RECOVERED: {
+            <span class={styles.blackCircle}></span> DECEASED: {nodes.filter(({ state }) => state === DEAD).length} <br />
+            <span class={styles.recoveredCircle}></span> RECOVERED: {
               nodes.filter(({ state }) => state === RECOVERED).length
             }{" "}
             <br />
-            INFECTED: {nodes.filter(({ state }) => state === SICK).length} <br />
+            <span class={styles.infectedCircle}></span> INFECTED: {nodes.filter(({ state }) => state === SICK).length} <br />
             <br />
             TOTAL CONFIRMED CASES: {nodes.filter(({ state }) => state === SICK || state === DEAD || state === RECOVERED).length} <br />
           </div>
@@ -158,6 +158,11 @@ function App() {
         </div>
         <div className={styles.simulationSettings}>
           <h3>Settings</h3>
+          <SimulationSettings
+            simulationState={simulationState}
+            onSettingChange={onSettingChange}
+            onRestartButtonClick={onRestartButtonClick}
+          />
           <div className={styles.simulationInfo}>
             How we will set up our experiment?
             <p>
@@ -173,13 +178,7 @@ function App() {
             <p>
               You can reset the simulation each time by clicking restart the simulation.
             </p>
-
           </div>
-          <SimulationSettings
-            simulationState={simulationState}
-            onSettingChange={onSettingChange}
-            onRestartButtonClick={onRestartButtonClick}
-          />
         </div>
 
       </div>
