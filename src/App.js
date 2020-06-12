@@ -32,6 +32,8 @@ function App() {
   const [historicalRecoveredCount, setHistoricalRecoveredCount] = useState([]);
   const [historicalDeadCount, setHistoricalDeadCount] = useState([]);
   const [historicalVaccinatedCount, setHistoricalVaccinatedCount] = useState([]);
+  const [historicalMaxInfected, setHistoricalMaxInfected] = useState([]);
+  const [historicalDayMaxInfected, setHistoricalDayMaxInfected] = useState([]);
   const [loading, setLoading] = useState(true);
   let sirModelIterate
 
@@ -77,6 +79,10 @@ function App() {
         )
       );
     }
+    if (nodes.filter(({ state }) => state === SICK).length > historicalMaxInfected) {
+      setHistoricalMaxInfected([nodes.filter(({ state }) => state === SICK).length])
+      setHistoricalDayMaxInfected(simulationState.tick)
+    }
   }, 1000);
 
   useEffect(() => {
@@ -97,6 +103,8 @@ function App() {
     setNodes(nodes);
     setEdges(edges);
     setHistoricalDeadCount([]);
+    setHistoricalMaxInfected([]);
+    setHistoricalDayMaxInfected([]);
     setHistoricalRecoveredCount([]);
     setHistoricalSickCount([]);
     setHistoricalVaccinatedCount([]);
@@ -150,8 +158,14 @@ function App() {
             <br />
             <span class={styles.infectedCircle}></span> INFECTED: {nodes.filter(({ state }) => state === SICK).length} <br />
             <br />
-            TOTAL CONFIRMED CASES: {nodes.filter(({ state }) => state === SICK || state === DEAD || state === RECOVERED).length} <br />
+            TOTAL CONFIRMED CASES: {nodes.filter(({ state }) => state === SICK || state === DEAD || state === RECOVERED).length} <br /><br />
+            NUMBER INFECTED AT PEAK: {historicalMaxInfected} <br />
+            DAY OF PEAK INFECTION: {historicalDayMaxInfected+1} <br />
+           <p>
+           DAY COUNTER: {simulationState.tick+1} <br />
+           </p>
           </div>
+
           <LineChart
             width={300}
             height={270}
@@ -170,32 +184,11 @@ function App() {
             onRestartButtonClick={onRestartButtonClick}
           />
           <div className={styles.simulationInfo}>
-            Method:
-            <p>
-            You will collect that data for experiments under three different conditions:
-            where the initial number vaccinated are 0%, 50% and 95%.
-            </p>
-            <b>Experiment 1 - 0% vaccinated</b>
-            <p>
-            Use the slider bar in the simulation to enter 0% initial number vaccinated.
-            Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
-            <b>recovered</b>, and <b>infected</b> after 100 days in <b>Table 1</b>.
-            Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
-            </p>
-            <b>Experiment 2 - 50% vaccinated</b>
-            <p>
-            Use the slider bar in the simulation to enter 50% initial number vaccinated.
-            Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
-            <b>recovered</b>, and <b>infected</b> after 100 days in <b>Table 1</b>.
-            Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
-            </p>
-            <b>Experiment 3 - 95% vaccinated</b>
-            <p>
-            Use the slider bar in the simulation to enter 95% initial number vaccinated.
-            Run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>,
-            <b>recovered</b>, and <b>infected</b> after 100 days in <b>Table 1</b>.
-            Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>.
-            </p>
+            <h3> Method: </h3>
+            <p><b>You will run three experiments:</b> where the initial number vaccinated are 0%, 50% and 95% and record data from the experiments on <b>Table 1</b> and <b>Table 2</b> of your worksheet. </p>
+            <p> Use the slider bar in the simulation to enter the initial percentage of population that are vaccinated as indicated in <b>Table 1</b>, then run the simulation and then record the final numbers for <b>susceptible</b>,  <b>deceased</b>, <b>recovered</b> and <b>infected</b> after 100 days in <b>Table 1</b>. </p>
+            <p> Record the number of infected at peak, and time in days to reach peak in <b>Table 2</b>. </p>
+            <p> Repeat the experiment for each percentage of initially vaccinated people. </p>
           </div>
         </div>
 
@@ -210,38 +203,10 @@ function App() {
           data-ad-slot="8487596319"
         ></ins>
         <div className={styles.section}>
-
-
-
-
-
-
-          <h3>What is observable? - Dependent variables</h3>
-          <p>
-          The simulation will allow you to observe a number of variables as you
-          watch what happens over 100 days. You will be able to see:</p>
-          <ul>
-            <li>how many people get infected / die / recover</li>
-            <li>how quickly the virus spreads</li>
-          </ul>
-          <h3>What can we change? - Independent variables</h3>
-          <p>
-            You will be able to make changes to how many people are vaccinated
-            at the start of the experiment.
-          </p>
-          <h1>I would like to discover more</h1>
-          <p>
-            This is an MIT-licensed open-source project, you can find the source
-            code on github.
-          </p>
-          <p>
-            <a href="https://github.com/fatiherikli/coronavirus-simulation">
-              https://github.com/fatiherikli/coronavirus-simulation
-            </a>
-          </p>
-
-          <p style={{ marginBottom: "4em" }}>
-          </p>
+          <h3>The code for this simulation</h3>
+          <p>We would like to acknowledge Fatih Erikli who developed the original code behind this simulation. A big thank you to Chris Goddard for donating his time and helping us develop the simulation used in this experiment.</p>
+          <p>This is an MIT-licensed open-source project, you can find the source for the  <a href="https://github.com/fatiherikli/coronavirus-simulation"> original </a> and <a href="https://github.com/token-cjg/coronavirus-simulation"> modified </a> code on github. Feel free to copy, use or modify it for your own simulations.</p>
+          <p style={{ marginBottom: "4em" }}></p>
         </div>
       </div>
     </div>
